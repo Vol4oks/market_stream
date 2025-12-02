@@ -1,5 +1,5 @@
-#![deny(unreachable_pub)]
-#![warn(missing_docs)]
+#![deny(unreachable_pub)] 
+#![warn(missing_docs)]// хороший стиль!
 
 //! Клиент для работы с сервером стриминга
 //! Пример запуска:
@@ -21,7 +21,7 @@ use quote_lib::{PING_MSG, PONG_MSG, SERVER_OK, STREAM_CMD, StockQuote};
 
 #[derive(Parser)]
 struct Args {
-    #[clap(short, long, default_value = "127.0.0.1:8080")]
+    #[clap(short, long, default_value = "127.0.0.1:8080"/* сщмнительное использование портов, но для примера - сойдёт*/)]
     server_addr: String,
 
     #[clap(short, long, default_value = "34254")]
@@ -40,7 +40,7 @@ struct PingData {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    env_logger::Builder::new()
+    env_logger::Builder::new() // 👍
         .filter_level(log::LevelFilter::Info)
         .parse_default_env()
         .format_target(true)
@@ -49,7 +49,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Обработка сигнала завершения
     let running = Arc::new(AtomicBool::new(true));
     let r = running.clone();
-    ctrlc::set_handler(move || {
+    ctrlc::set_handler(move || { // 👍
         log::info!("Получен сигнал завершения, освобождаем ресурсы...");
         r.store(false, Ordering::SeqCst);
     })?;
@@ -134,7 +134,7 @@ fn send_ping_loop(
     running: Arc<AtomicBool>,
 ) {
     while running.load(Ordering::SeqCst) {
-        thread::sleep(Duration::from_secs(2));
+        thread::sleep(Duration::from_secs(2)); // 👍👍👍 (немногие ученики этот момент правильно делают)
         let mut server_addr = server_addr.lock().unwrap();
 
         if let Some(addr) = server_addr.as_mut() {

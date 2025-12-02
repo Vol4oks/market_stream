@@ -9,11 +9,11 @@ pub struct StockQuote {
     /// Тикер акции.
     pub ticker: String,
     /// Цена акции.
-    pub price: f64,
+    pub price: f64, // в реальном финтехе никогда цена не моделируется через числа с плавающими точками из-за небольших ошибок при операциях над ними) знай теперь)
     /// Объем торгов.
     pub volume: f64,
     /// Время торгов.
-    pub timestamp: u64,
+    pub timestamp: u64, // оучше испольщовать std::time::Date / chrono::DateTime типизировынные обёртки над сырыми юникс датами
 }
 
 impl StockQuote {
